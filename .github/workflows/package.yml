@@ -10,6 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
+    - name: Create GlitchSDK Directory
+      run: |
+        mkdir -p GlitchSDK
+        
+        # Copy your assets to GlitchSDK
+        find . -maxdepth 1 -mindepth 1 -not -name "GlitchSDK" -exec cp -R {} GlitchSDK/ \;
+        echo "Repository files copied to GlitchSDK."
+
+        # Create .meta files for each asset
+        find GlitchSDK -type f -exec touch {}.meta \;
+
+    - name: Create meta list
     - run: |
         echo "Editor.meta" > metaList
         find "Details.json.meta" >> metaList
