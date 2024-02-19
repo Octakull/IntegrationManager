@@ -28,7 +28,7 @@ jobs:
 
     - name: Save GlitchSDK.meta as Artifact
       run: |
-        echo "GlitchSDK.meta" > metaList
+        echo "GlitchSDK.meta"
         post-actions:
           artifacts:
             paths:
