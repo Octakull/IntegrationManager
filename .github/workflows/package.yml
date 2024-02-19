@@ -12,6 +12,7 @@ jobs:
     - uses: actions/checkout@v2
     - run: |
         echo "Editor.meta" > metaList
+        find "Details.meta" >> metaList
         find Editor/ -name \*.meta >> metaList
     
     - run: mkdir a
