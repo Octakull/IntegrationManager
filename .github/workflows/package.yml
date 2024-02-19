@@ -13,12 +13,6 @@ jobs:
     - run: |
         echo "Editor.meta" > metaList
         find Editor/ -name \*.meta >> metaList
-        
-    - name: Prepare UnityPackage directory
-      run: mkdir -p Assets/YourParentFolder/
-
-    - name: Copy assets to UnityPackage directory
-      run: cp -R Runtime/* Assets/YourParentFolder/
     
     - run: mkdir a
 
