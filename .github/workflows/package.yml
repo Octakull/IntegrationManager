@@ -1,41 +1,32 @@
-name: Export Package
+name: Build UnityPackage
 
 on:
-  pull_request: {}
-  push: { branches: [main] }
-  
+  push:
+    branches:
+      - main
+
 jobs:
-  build:
-    name: Build UnityPackage
+  echo:
     runs-on: ubuntu-latest
     steps:
-      # Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          lfs: true
+    - uses: actions/checkout@v2
+    - run: |
+        echo "Runtime.meta" > metaList
+        find Runtime/ -name \*.meta >> metaList
+        
+    - name: Prepare UnityPackage directory
+      run: mkdir -p Assets/YourParentFolder/
 
-      # Cache
-      - name: Cache
-        uses: actions/cache@v2
-        with:
-          path: Library
-          key: Library
-          restore-keys: Library-
+    - name: Copy assets to UnityPackage directory
+      run: cp -R Runtime/* Assets/YourParentFolder/
+    
+    - run: mkdir a
 
-      # Build
-      - name: Build .unitypackage
-        uses: game-ci/unity-builder@v2
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          buildMethod: GlitchSDK.IntegrationManager.Editor.Export # Path to the export method containing the namespace.
-
-      # Upload
-      - name: Upload .unitypackage
-        uses: actions/upload-artifact@v2
-        with:
-          name: Unity Package
-          path: Build
+    - uses: pCYSl5EDgo/create-unitypackage@master
+      with:
+        package-path: 'a/output.unitypackage'
+        include-files: metaList
+    - uses: actions/upload-artifact@master
+      with:
+        path: a
+        name: package
