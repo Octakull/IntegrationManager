@@ -11,8 +11,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: |
-        echo "Runtime.meta" > metaList
-        find Runtime/ -name \*.meta >> metaList
+        echo "Editor.meta" > metaList
+        find Editor/ -name \*.meta >> metaList
         
     - name: Prepare UnityPackage directory
       run: mkdir -p Assets/YourParentFolder/
