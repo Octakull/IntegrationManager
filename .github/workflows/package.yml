@@ -23,9 +23,8 @@ jobs:
         find GlitchSDK -type f -exec touch {}.meta \;
 
     - run: |
-        echo "Editor.meta" > metaList
-        find "Details.json.meta" >> metaList
-        find Editor/ -name \*.meta >> metaList
+        echo "GlitchSDK.meta" > metaList
+        find GlitchSDK/ -name \*.meta >> metaList
     
     - run: mkdir a
 
