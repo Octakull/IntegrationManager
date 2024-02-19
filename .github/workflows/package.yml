@@ -20,7 +20,7 @@ jobs:
         echo "Repository files copied to GlitchSDK."
 
         # Create .meta files for each asset
-        find GlitchSDK -type f -exec touch {}.meta \;
+        touch GlitchSDK.meta
 
     - name: Display GlitchSDK.meta Content
       run: |
