@@ -1,0 +1,45 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="login_container" style="flex-grow: 1; display: flex; width: 100%; position: absolute; visibility: visible; min-height: 100%; height: 100%;">
+        <ui:GroupBox style="margin-top: 25px; background-color: rgb(46, 46, 46); border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; padding-top: 10px; padding-right: 5px; padding-bottom: 10px; padding-left: 5px; margin-right: 6px; margin-left: 6px;">
+            <ui:Label tabindex="-1" text="Login" parse-escape-sequences="true" display-tooltip-when-elided="true" name="login_title" style="align-self: flex-start; font-size: 15px;" />
+            <ui:TextField picking-mode="Ignore" label="Auth Token" value="AUTH_TOKEN_GOES_HERE" name="token_field" style="margin-top: 10px;" />
+            <ui:Button text="Submit" parse-escape-sequences="true" display-tooltip-when-elided="true" name="login_submit_button" style="font-size: 15px; margin-top: 15px; width: 30%; align-self: flex-end;" />
+        </ui:GroupBox>
+    </ui:VisualElement>
+    <ui:VisualElement name="loading_container" style="flex-grow: 1; display: flex; visibility: hidden; position: absolute; width: 100%; height: auto;">
+        <ui:GroupBox style="margin-right: 6px; margin-left: 6px; margin-top: 60px;">
+            <ui:ProgressBar value="25.5" title="Loading packages..." />
+        </ui:GroupBox>
+    </ui:VisualElement>
+    <ui:VisualElement name="main_container" style="flex-grow: 1; visibility: visible; display: flex; position: absolute; width: 100%; height: 100%;">
+        <ui:GroupBox name="integration_container" style="background-color: rgb(46, 46, 46); padding-top: 10px; padding-bottom: 10px; padding-right: 5px; padding-left: 5px; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 0; border-bottom-left-radius: 0; margin-left: 6px; margin-right: 6px; height: 15%; margin-bottom: 0; border-bottom-width: 1px; border-left-color: rgb(26, 26, 26); border-right-color: rgb(26, 26, 26); border-top-color: rgb(26, 26, 26); border-bottom-color: rgb(26, 26, 26);">
+            <ui:Label tabindex="-1" text="Integration Manager" parse-escape-sequences="true" display-tooltip-when-elided="true" name="integration_title" style="font-size: 15px;" />
+            <ui:GroupBox name="integration_version_group" style="flex-direction: row; border-top-left-radius: 5px; border-top-right-radius: 5px; border-bottom-right-radius: 5px; border-bottom-left-radius: 5px; background-color: rgb(87, 87, 87); padding-left: 5px; padding-right: 5px;">
+                <ui:Label tabindex="-1" text="Version" parse-escape-sequences="true" display-tooltip-when-elided="true" name="version_title" style="width: 90%;" />
+                <ui:Label tabindex="-1" text="0.0.0" parse-escape-sequences="true" display-tooltip-when-elided="true" name="integration_current_version" style="width: 10%;" />
+            </ui:GroupBox>
+            <ui:Button text="Update to 0.0.1" parse-escape-sequences="true" display-tooltip-when-elided="true" name="integration_update_button" style="width: 20%; margin-top: 5px; align-self: flex-end;" />
+        </ui:GroupBox>
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+            <ui:ScrollView name="packages_list_container" style="width: 50%; background-color: rgb(46, 46, 46); margin-bottom: 6px; margin-left: 6px; border-bottom-left-radius: 8px;" />
+            <ui:VisualElement style="flex-grow: 1; width: 50%; border-bottom-right-radius: 8px; background-color: rgb(46, 46, 46); margin-bottom: 6px; margin-right: 6px; border-left-color: rgb(26, 26, 26); border-right-color: rgb(26, 26, 26); border-top-color: rgb(26, 26, 26); border-bottom-color: rgb(26, 26, 26); border-left-width: 1px;">
+                <ui:VisualElement name="package_header_container" style="flex-grow: 1; height: 15%; background-color: rgb(87, 87, 87); padding-top: 6px; padding-right: 6px; padding-left: 6px;">
+                    <ui:Label tabindex="-1" text="Package Name" parse-escape-sequences="true" display-tooltip-when-elided="true" name="details_package_name" style="font-size: 18px;" />
+                    <ui:Label tabindex="-1" text="0.01 - November 14, 2023" parse-escape-sequences="true" display-tooltip-when-elided="true" name="details_package_version" style="margin-top: 5px;" />
+                    <ui:Button text="Update" parse-escape-sequences="true" display-tooltip-when-elided="true" name="package_update_button" style="width: 35%; align-self: flex-end; margin-top: 5px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="package_details_container" style="flex-grow: 1; height: 3%; flex-direction: row;">
+                    <uie:ToolbarButton text="Description" parse-escape-sequences="true" display-tooltip-when-elided="true" name="description_button" style="flex-direction: column; width: 50%; -unity-text-align: middle-left;" />
+                    <uie:ToolbarButton text="Releases" parse-escape-sequences="true" display-tooltip-when-elided="true" name="releases_button" style="width: 50%; -unity-text-align: middle-left;" />
+                </ui:VisualElement>
+                <ui:VisualElement style="flex-grow: 1; height: 82%; visibility: visible;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:VisualElement name="error_container" style="flex-grow: 1; position: absolute; width: 100%; visibility: hidden;">
+        <ui:GroupBox style="margin-top: 25px; margin-right: 6px; margin-left: 6px; padding-right: 5px; padding-top: 10px; padding-bottom: 10px; padding-left: 5px; background-color: rgb(46, 46, 46); border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px;">
+            <ui:Label tabindex="-1" text="Error" parse-escape-sequences="true" display-tooltip-when-elided="true" name="error_title" style="max-width: 80%; align-self: flex-start; font-size: 15px;" />
+            <ui:Label tabindex="-1" text="Error messge goes here!" parse-escape-sequences="true" display-tooltip-when-elided="true" name="error_message" style="background-color: rgb(87, 87, 87); padding-right: 13px; padding-top: 13px; padding-bottom: 13px; padding-left: 13px; border-top-left-radius: 8px; border-top-right-radius: 8px; border-bottom-right-radius: 8px; border-bottom-left-radius: 8px; margin-left: 0; margin-right: 0; margin-top: 15px; margin-bottom: 0; align-self: flex-start; min-width: 100%; white-space: normal;" />
+        </ui:GroupBox>
+    </ui:VisualElement>
+</ui:UXML>
