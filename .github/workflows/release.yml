@@ -1,35 +1,41 @@
-name: Build UnityPackage
+name: Export Package
 
 on:
-  push:
-    branches:
-      - main
+  pull_request: {}
+  push: { branches: [main] }
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
 
 jobs:
   build:
+    name: Build UnityPackage
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
 
-    - name: Set up Unity
-      uses: game-ci/setup-unity@v1
-      with:
-        unityVersion: 2020.3.17f1
-        modules: 'all'
+      # Cache
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: Library
+          key: Library
+          restore-keys: Library-
 
-    - name: Build UnityPackage
-      run: |
-        mkdir -p GlitchSDK
-        # Copy your assets to the desired parent folder
-        cp -R Editor/* GlitchSDK/
+      # Build
+      - name: Build .unitypackage
+        uses: game-ci/unity-builder@v2
+        with:
+          unityVersion: 2020.3.1f1
+          buildMethod: ExportPackageExample.Editor.UnityPackageExporter.Export # Path to the export method containing the namespace.
 
-        # Build the UnityPackage
-        unity -quit -batchmode -logFile -projectPath $(pwd) -exportPackage "GlitchSDK" "YourPackage.unitypackage"
-
-    - name: Upload UnityPackage
-      uses: actions/upload-artifact@v2
-      with:
-        name: YourPackage
-        path: YourPackage.unitypackage
+      # Upload
+      - name: Upload .unitypackage
+        uses: actions/upload-artifact@v2
+        with:
+          name: Unity Package
+          path: Build
