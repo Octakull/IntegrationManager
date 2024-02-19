@@ -21,18 +21,9 @@ jobs:
 
         # Create .meta files for each asset
         touch GlitchSDK.meta
-
-    - name: Display GlitchSDK.meta Content
-      run: |
-        cat GlitchSDK.meta
-
-    - name: Save GlitchSDK.meta as Artifact
-      run: |
-        echo "GlitchSDK.meta"
-        post-actions:
-          artifacts:
-            paths:
-              - GlitchSDK.meta
+        echo "fileFormatVersion: 2" > GlitchSDK.meta
+        echo "guid: 35413811acd778c49a42dd3a6f867699" > GlitchSDK.meta
+        echo "folderAsset: yes" > GlitchSDK.meta
     
     - run: |
         echo "GlitchSDK.meta" > metaList
