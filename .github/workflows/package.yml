@@ -22,6 +22,10 @@ jobs:
         # Create .meta files for each asset
         find GlitchSDK -type f -exec touch {}.meta \;
 
+    - name: Display GlitchSDK.meta Content
+      run: |
+        cat GlitchSDK.meta
+
     - run: |
         echo "GlitchSDK.meta" > metaList
         find GlitchSDK/ -name \*.meta >> metaList
