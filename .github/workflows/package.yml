@@ -9,7 +9,11 @@ jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+
+    - uses: actions/setup-dotnet@v3
+      with:
+        global-json-file: global.json
 
     - name: Create IntegrationManager Directory
       run: |
@@ -49,17 +53,21 @@ jobs:
         echo "  assetBundleName:" >> GlitchSDK.meta
         echo "  assetBundleVariant:" >> GlitchSDK.meta
     
-    - run: |
-        echo "GlitchSDK.meta" > metaList
-        find GlitchSDK/ -name \*.meta >> metaList
-    
-    - run: mkdir a
-
-    - uses: pCYSl5EDgo/create-unitypackage@master
+    - name: build
+      uses: game-ci/unity-builder@v2
+      env:
+        UNITY_LICENSE: ${{ secrets.UNITY_LICENSE_2021 }}
       with:
-        package-path: 'a/IntegrationManager.unitypackage'
-        include-files: metaList
-    - uses: actions/upload-artifact@master
+        projectPath: GlitchSDK
+        unityVersion: 2021.3.11f1
+        targetPlatform: StandaloneLinux64
+        buildMethod: PackageExporter.Export
+        customParameters: /headless /ScriptBackend mono
+        versioning: None
+    - uses: Cysharp/Actions/.github/actions/check-metas@main # check meta files
       with:
-        path: a
-        name: package
+        directory: GlitchSDK
+    - uses: actions/upload-artifact@v3
+      with:
+        name: IntegrationManager.unitypackage
+        path: bin/*.unitypackage
