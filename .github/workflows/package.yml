@@ -76,11 +76,13 @@ jobs:
       id: read_json
       run: |
         # Read information from the JSON file into environment variables
-        export VERSION_FROM_DETAILS=$(jq -r 'version' Details.json)
+        export VERSION_FROM_DETAILS=$(jq -r '.version' Details.json)
 
     - name: Compare Tag Name and Details version
       run: |
-        if [ "${{ github.ref }}" != "refs/tags/${{ env.VERSION_FROM_DETAILS }}" ]; then
+        echo "Version: ${{ env.VERSION_FROM_DETAILS }}"
+        if [ "${{ github.ref }}" != "refs/tags/${{ env.VERSION_FROM_DETAILS }}" ];
+        then
           echo "Tag name and Details version does not match. Skipping release creation."
           exit 0  # Exit with success to stop further steps
         fi
