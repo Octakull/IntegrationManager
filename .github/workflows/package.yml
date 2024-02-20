@@ -2,14 +2,27 @@ name: Build UnityPackage
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - '*'
 
 jobs:
   echo:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
+    - name: Read JSON file
+      id: read_json
+      run: |
+        # Read information from the JSON file into environment variables
+        export VERSION_FROM_DETAILS=$(jq -r '.version' Details.json)
+
+    - name: Compare Tag Name and Details version
+      run: |
+        if [ "${{ github.ref }}" != "${{ env.VERSION_FROM_DETAILS }}" ]; then
+          echo "Tag name and Details version does not match. Skipping release creation."
+          exit 0  # Exit with success to stop further steps
+        fi
 
     - name: Create IntegrationManager Directory
       run: |
@@ -71,3 +84,26 @@ jobs:
       with:
         path: a
         name: package
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: v${{ github.ref }}
+        body: "needs to be dynamic based on description"
+        draft: false
+        prerelease: false
+
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} 
+        asset_path: 'a/IntegrationManager.unitypackage'
+        asset_name: IntegrationManager.unitypackage
+        asset_content_type: application/octet-stream
