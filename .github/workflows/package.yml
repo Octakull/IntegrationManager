@@ -11,11 +11,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Create Env variables
+    - name: Read Details and create Env variables
       run: |
-        echo 'DETAILS_JSON << EOF' >> $GITHUB_ENV
-        cat ./Details.json >> $GITHUB_ENV
-        echo 'EOF' >> $GITHUB_ENV
+        echo "DETAILS_JSON=$(jq -c . < Details.json)" >> $GITHUB_ENV
     - run: |
         echo '${{ fromJson(env.DETAILS_JSON).version }}'
 
