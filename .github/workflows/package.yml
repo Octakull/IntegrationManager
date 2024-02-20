@@ -11,6 +11,12 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Read JSON file
+      id: read_json
+      run: |
+        # Read information from the JSON file into environment variables
+        export VERSION_FROM_DETAILS=$(jq -r '.version' Details.json)
+
     - name: Create IntegrationManager Directory
       run: |
         mkdir -p IntegrationManager
@@ -71,12 +77,6 @@ jobs:
       with:
         path: a
         name: package
-        
-    - name: Read JSON file
-      id: read_json
-      run: |
-        # Read information from the JSON file into environment variables
-        export VERSION_FROM_DETAILS=$(jq -r '.version' Details.json)
 
     - name: Compare Tag Name and Details version
       run: |
