@@ -35,7 +35,7 @@ jobs:
         mkdir -p GlitchSDK
         
         # Copy your assets to GlitchSDK
-        cp -R IntegrationManager/* GlitchSDK/
+        cp -R IntegrationManager GlitchSDK/
         echo "Repository files copied to GlitchSDK."
 
         # Create .meta files for each asset
