@@ -11,6 +11,25 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Create IntegrationManager Directory
+      run: |
+        mkdir -p IntegrationManager
+        
+        # Copy assets to IntegrationManager
+        find . -maxdepth 1 -mindepth 1 -not -name "IntegrationManager" -exec cp -R {} IntegrationManager/ \;
+        echo "Repository files copied to IntegrationManager."
+
+        # Create .meta files for each asset
+        touch IntegrationManager.meta
+        echo "fileFormatVersion: 2" > IntegrationManager.meta
+        echo "guid: e179bf41f223f1b478e0c00e9f819864" >> IntegrationManager.meta
+        echo "folderAsset: yes" >> IntegrationManager.meta
+        echo "DefaultImporter:" >> IntegrationManager.meta
+        echo "  externalObjects: {}" >> IntegrationManager.meta
+        echo "  userData:" >> IntegrationManager.meta
+        echo "  assetBundleName:" >> IntegrationManager.meta
+        echo "  assetBundleVariant:" >> IntegrationManager.meta
+        
     - name: Create GlitchSDK Directory
       run: |
         mkdir -p GlitchSDK
