@@ -10,48 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-
-    - name: Create IntegrationManager Directory
-      run: |
-        mkdir -p IntegrationManager
-        
-        # Copy assets to IntegrationManager
-        find . -maxdepth 1 -mindepth 1 -not -name "IntegrationManager" -exec cp -R {} IntegrationManager/ \;
-        echo "Repository files copied to IntegrationManager."
-
-        # Create .meta files for IntegrationManager
-        touch IntegrationManager.meta
-        echo "fileFormatVersion: 2" > IntegrationManager.meta
-        echo "guid: e179bf41f223f1b478e0c00e9f819864" >> IntegrationManager.meta
-        echo "folderAsset: yes" >> IntegrationManager.meta
-        echo "DefaultImporter:" >> IntegrationManager.meta
-        echo "  externalObjects: {}" >> IntegrationManager.meta
-        echo "  userData:" >> IntegrationManager.meta
-        echo "  assetBundleName:" >> IntegrationManager.meta
-        echo "  assetBundleVariant:" >> IntegrationManager.meta
-        
-    - name: Create GlitchSDK Directory
-      run: |
-        mkdir -p GlitchSDK
-        
-        # Copy your assets to GlitchSDK
-        cp -R IntegrationManager GlitchSDK/
-        echo "Repository files copied to GlitchSDK."
-
-        # Create .meta files for GlitchSDK
-        touch GlitchSDK.meta
-        echo "fileFormatVersion: 2" > GlitchSDK.meta
-        echo "guid: 35413811acd778c49a42dd3a6f867699" >> GlitchSDK.meta
-        echo "folderAsset: yes" >> GlitchSDK.meta
-        echo "DefaultImporter:" >> GlitchSDK.meta
-        echo "  externalObjects: {}" >> GlitchSDK.meta
-        echo "  userData:" >> GlitchSDK.meta
-        echo "  assetBundleName:" >> GlitchSDK.meta
-        echo "  assetBundleVariant:" >> GlitchSDK.meta
     
     - run: |
-        echo "GlitchSDK.meta" > metaList
-        find GlitchSDK/ -name \*.meta >> metaList
+        echo "Editor.meta" > metaList
+        find Editor/ -name \*.meta >> metaList
     
     - run: mkdir a
 
