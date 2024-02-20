@@ -1,2 +1,2 @@
 # IntegrationManager
- GlitchSDK's main package.
+ GlitchSDK's main package..
