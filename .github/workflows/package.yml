@@ -11,19 +11,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Read JSON file
-      id: read_json
-      run: |
-        # Read information from the JSON file into environment variables
-        export VERSION_FROM_DETAILS=$(jq -r '.version' Details.json)
-
-    - name: Compare Tag Name and Details version
-      run: |
-        if [ "${{ github.ref }}" != "${{ env.VERSION_FROM_DETAILS }}" ]; then
-          echo "Tag name and Details version does not match. Skipping release creation."
-          exit 0  # Exit with success to stop further steps
-        fi
-
     - name: Create IntegrationManager Directory
       run: |
         mkdir -p IntegrationManager
@@ -84,7 +71,20 @@ jobs:
       with:
         path: a
         name: package
+        
+    - name: Read JSON file
+      id: read_json
+      run: |
+        # Read information from the JSON file into environment variables
+        export VERSION_FROM_DETAILS=$(jq -r 'version' Details.json)
 
+    - name: Compare Tag Name and Details version
+      run: |
+        if [ "${{ github.ref }}" != "refs/tags/${{ env.VERSION_FROM_DETAILS }}" ]; then
+          echo "Tag name and Details version does not match. Skipping release creation."
+          exit 0  # Exit with success to stop further steps
+        fi
+        
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
