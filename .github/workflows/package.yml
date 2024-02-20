@@ -6,15 +6,14 @@ on:
       - '*'
 
 jobs:
-  echo:
+  conditional-release:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     
-    - name: Read Details and create Env variables
+    - name: Read Details
       run: |
         echo "DETAILS_JSON=$(jq -c . < Details.json)" >> $GITHUB_ENV
-    - run: |
         echo '${{ fromJson(env.DETAILS_JSON).version }}'
 
     - name: Create IntegrationManager Directory
@@ -92,8 +91,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: v${{ github.ref }}
+        tag_name: ${{ fromJson(env.DETAILS_JSON).version }}
+        release_name: v${{ fromJson(env.DETAILS_JSON).version }}
         body: "needs to be dynamic based on description"
         draft: false
         prerelease: false
