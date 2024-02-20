@@ -37,17 +37,6 @@ jobs:
         # Copy your assets to GlitchSDK
         cp -R IntegrationManager GlitchSDK/
         echo "IntegrationManager copied to GlitchSDK."
-
-        # Create .meta files for GlitchSDK
-        touch GlitchSDK.meta
-        echo "fileFormatVersion: 2" > GlitchSDK.meta
-        echo "guid: 35413811acd778c49a42dd3a6f867699" >> GlitchSDK.meta
-        echo "folderAsset: yes" >> GlitchSDK.meta
-        echo "DefaultImporter:" >> GlitchSDK.meta
-        echo "  externalObjects: {}" >> GlitchSDK.meta
-        echo "  userData:" >> GlitchSDK.meta
-        echo "  assetBundleName:" >> GlitchSDK.meta
-        echo "  assetBundleVariant:" >> GlitchSDK.meta
         
     - name: Create Assets Directory
       run: |
@@ -56,6 +45,17 @@ jobs:
         # Copy GlitchSDK to Assets
         cp -R GlitchSDK Assets/
         echo "GlitchSDK copied to Assets."
+
+        # Create .meta files for GlitchSDK
+        touch Assets/GlitchSDK.meta
+        echo "fileFormatVersion: 2" > Assets/GlitchSDK.meta
+        echo "guid: 35413811acd778c49a42dd3a6f867699" >> Assets/GlitchSDK.meta
+        echo "folderAsset: yes" >> Assets/GlitchSDK.meta
+        echo "DefaultImporter:" >> Assets/GlitchSDK.meta
+        echo "  externalObjects: {}" >> Assets/GlitchSDK.meta
+        echo "  userData:" >> Assets/GlitchSDK.meta
+        echo "  assetBundleName:" >> Assets/GlitchSDK.meta
+        echo "  assetBundleVariant:" >> Assets/GlitchSDK.meta
     
     - run: |
         echo "Assets/GlitchSDK.meta" > metaList
