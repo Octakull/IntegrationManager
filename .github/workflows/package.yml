@@ -80,8 +80,8 @@ jobs:
 
     - name: Compare Tag Name and Details version
       run: |
-        echo "Version: $VERSION_FROM_DETAILS"
-        if [ "${{ github.ref }}" != "refs/tags/$VERSION_FROM_DETAILS" ];
+        echo "Version: ${{ env.VERSION_FROM_DETAILS }}"
+        if [ "${{ github.ref }}" != "refs/tags/${{ env.VERSION_FROM_DETAILS }}" ];
         then
           echo "Tag name and Details version does not match. Skipping release creation."
           exit 0  # Exit with success to stop further steps
