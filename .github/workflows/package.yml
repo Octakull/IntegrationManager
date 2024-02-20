@@ -14,8 +14,8 @@ jobs:
     - name: Read JSON file
       id: read_json
       run: |
-        # Read information from the JSON file into environment variables
         export VERSION_FROM_DETAILS=$(jq -r '.version' Details.json)
+        echo "Details Version: ${{ env.VERSION_FROM_DETAILS }}"
 
     - name: Create IntegrationManager Directory
       run: |
@@ -40,7 +40,7 @@ jobs:
       run: |
         mkdir -p GlitchSDK
         
-        # Copy your assets to GlitchSDK
+        # Copy assets to GlitchSDK
         cp -R IntegrationManager GlitchSDK/
         echo "IntegrationManager copied to GlitchSDK."
         
@@ -80,7 +80,6 @@ jobs:
 
     - name: Compare Tag Name and Details version
       run: |
-        echo "Version: ${{ env.VERSION_FROM_DETAILS }}"
         if [ "${{ github.ref }}" != "refs/tags/${{ env.VERSION_FROM_DETAILS }}" ];
         then
           echo "Tag name and Details version does not match. Skipping release creation."
