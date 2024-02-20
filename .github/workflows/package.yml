@@ -10,12 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-
-    - name: Read JSON file
-      id: read_json
+    
+    - name: Create Env variables
       run: |
-        export VERSION_FROM_DETAILS=$(jq -r '.version' Details.json)
-        echo "Details Version: ${{ env.VERSION_FROM_DETAILS }}"
+        echo 'DETAILS_JSON << EOF' >> $GITHUB_ENV
+        cat ./Details.json >> $GITHUB_ENV
+        echo 'EOF' >> $GITHUB_ENV
+    - run: |
+        echo '${{ fromJson(env.DETAILS_JSON).version }}'
 
     - name: Create IntegrationManager Directory
       run: |
@@ -80,7 +82,7 @@ jobs:
 
     - name: Compare Tag Name and Details version
       run: |
-        if [ "${{ github.ref }}" != "refs/tags/${{ env.VERSION_FROM_DETAILS }}" ];
+        if [ "${{ github.ref }}" != "refs/tags/${{ fromJson(env.DETAILS_JSON).version }}" ];
         then
           echo "Tag name and Details version does not match. Skipping release creation."
           exit 0  # Exit with success to stop further steps
