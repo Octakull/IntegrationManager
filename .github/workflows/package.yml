@@ -14,6 +14,7 @@ jobs:
     - name: Read Details
       run: |
         echo "DETAILS_JSON=$(jq -c . < Details.json)" >> $GITHUB_ENV
+    - run: |
         echo '${{ fromJson(env.DETAILS_JSON).version }}'
 
     - name: Create IntegrationManager Directory
