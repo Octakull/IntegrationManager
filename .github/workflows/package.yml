@@ -11,6 +11,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Create Global
+      run: |
+        mkdir -p global.json
+        echo "{"sdk":{"version":"7.0.101","rollForward":"patch","allowPrerelease":false}}" > global.json
+
     - uses: actions/setup-dotnet@v3
       with:
         global-json-file: global.json
