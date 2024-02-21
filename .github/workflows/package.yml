@@ -94,7 +94,7 @@ jobs:
       with:
         tag_name: ${{ fromJson(env.DETAILS_JSON).version }}
         release_name: v${{ fromJson(env.DETAILS_JSON).version }}
-        body: "needs to be dynamic based on description"
+        body: ${{ join('\n', fromJson(env.DETAILS_JSON).releaseNotes) }}
         draft: false
         prerelease: false
 
