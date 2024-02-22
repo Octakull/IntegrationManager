@@ -97,9 +97,8 @@ jobs:
         body: |
           ## Release Notes
           $(
-            for note in $(echo "${{ fromJson(env.DETAILS_JSON).releaseNotes | join('\n') }}" | jq -c -r '.[]'); do
-              echo " - $note"
-            done
+            IFS=$'\n' # Set Internal Field Separator to newline
+            echo "${{ fromJson(env.DETAILS_JSON).releaseNotes[*]/#/- }}" # Prefix each element with a bullet point
           )
         draft: false
         prerelease: false
