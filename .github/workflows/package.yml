@@ -28,7 +28,7 @@ jobs:
         # Create .meta files for Package
         touch ${{ fromJson(env.DETAILS_JSON).name }}.meta
         echo "fileFormatVersion: 2" > ${{ fromJson(env.DETAILS_JSON).name }}.meta
-        echo "guid: e179bf41f223f1b478e0c00e9f819864" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
+        echo "guid: ${{ fromJson(env.DETAILS_JSON).folderGuid}}" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
         echo "folderAsset: yes" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
         echo "DefaultImporter:" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
         echo "  externalObjects: {}" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
