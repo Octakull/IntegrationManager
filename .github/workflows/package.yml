@@ -41,8 +41,8 @@ jobs:
         mkdir -p GlitchSDK
         
         # Copy assets to GlitchSDK
-        cp -R IntegrationManager GlitchSDK/
-        echo "IntegrationManager copied to GlitchSDK."
+        cp -R ${{ fromJson(env.DETAILS_JSON).name }} GlitchSDK/
+        echo "${{ fromJson(env.DETAILS_JSON).name }} copied to GlitchSDK."
         
     - name: Create Assets Directory
       run: |
@@ -71,7 +71,7 @@ jobs:
 
     - uses: pCYSl5EDgo/create-unitypackage@master
       with:
-        package-path: 'a/IntegrationManager.unitypackage'
+        package-path: 'a/${{ fromJson(env.DETAILS_JSON).name }}.unitypackage'
         include-files: metaList
     - uses: actions/upload-artifact@master
       with:
@@ -106,6 +106,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} 
-        asset_path: 'a/IntegrationManager.unitypackage'
-        asset_name: IntegrationManager.unitypackage
+        asset_path: 'a/${{ fromJson(env.DETAILS_JSON).name }}.unitypackage'
+        asset_name: ${{ fromJson(env.DETAILS_JSON).name }}.unitypackage
         asset_content_type: application/octet-stream
