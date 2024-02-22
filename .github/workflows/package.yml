@@ -96,7 +96,7 @@ jobs:
       with:
         tag_name: ${{ fromJson(env.DETAILS_JSON).version }}
         release_name: v${{ fromJson(env.DETAILS_JSON).version }}
-        body: ${{ fromJson(env.DETAILS_JSON).releaseNotes }}
+        body: ${{ join('<br>', fromJson(env.DETAILS_JSON).releaseNotes) }}
         draft: false
         prerelease: false
 
