@@ -21,11 +21,11 @@ jobs:
       run: |
         mkdir -p ${{ fromJson(env.DETAILS_JSON).name }}
         
-        # Copy assets to Package
+        # Copy assets to ${{ fromJson(env.DETAILS_JSON).name }}
         find . -maxdepth 1 -mindepth 1 -not -name "${{ fromJson(env.DETAILS_JSON).name }}" -exec cp -R {} ${{ fromJson(env.DETAILS_JSON).name }}/ \;
         echo "Repository files copied to ${{ fromJson(env.DETAILS_JSON).name }}."
 
-        # Create .meta files for Package
+        # Create .meta files for ${{ fromJson(env.DETAILS_JSON).name }}
         touch ${{ fromJson(env.DETAILS_JSON).name }}.meta
         echo "fileFormatVersion: 2" > ${{ fromJson(env.DETAILS_JSON).name }}.meta
         echo "guid: ${{ fromJson(env.DETAILS_JSON).folderGuid}}" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
