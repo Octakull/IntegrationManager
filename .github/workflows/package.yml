@@ -17,7 +17,7 @@ jobs:
     - run: |
         echo "Details Version: ${{ fromJson(env.DETAILS_JSON).version }}"
     - run: |
-        echo "Release Notes: ${{ fromJson(env.Details_JSON).releaseNotes }}"
+        echo "Release Notes: ${{ fromJson(env.DETAILS_JSON).releaseNotes }}"
 
     - name: Create Package Directory
       run: |
