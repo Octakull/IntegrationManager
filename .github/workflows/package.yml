@@ -97,8 +97,8 @@ jobs:
         body: |
           ## Release Notes
           $(
-            for note in $(echo "${{ fromJson(env.DETAILS_JSON).releaseNotes }}" | jq -r '.[]'); do
-              echo "  - $note"
+            for note in $(echo "${{ fromJson(env.DETAILS_JSON).releaseNotes | join('\n') }}" | jq -c -r '.[]'); do
+              echo " - $note"
             done
           )
         draft: false
