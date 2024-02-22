@@ -16,6 +16,8 @@ jobs:
         echo "DETAILS_JSON=$(jq -c . < Details.json)" >> $GITHUB_ENV
     - run: |
         echo "Details Version: ${{ fromJson(env.DETAILS_JSON).version }}"
+    - run: |
+        echo "Release Notes: ${{ fromJson(env.Details_JSON).releaseNotes }}"
 
     - name: Create Package Directory
       run: |
@@ -94,8 +96,7 @@ jobs:
       with:
         tag_name: ${{ fromJson(env.DETAILS_JSON).version }}
         release_name: v${{ fromJson(env.DETAILS_JSON).version }}
-        body: >
-          ${{ join(' ', fromJson(env.DETAILS_JSON).releaseNotes) }}
+        body: ${{ fromJson(env.DETAILS_JSON).releaseNotes }}
         draft: false
         prerelease: false
 
