@@ -95,9 +95,9 @@ jobs:
         tag_name: ${{ fromJson(env.DETAILS_JSON).version }}
         release_name: v${{ fromJson(env.DETAILS_JSON).version }}
         body: |
-          # Release Notes
+          ## Release Notes
 
-          ${{ join(('- ' + (fromJson(env.DETAILS_JSON).releaseNotes | join('\n- '))), '\n') }}
+          ${{ join((echo "${{ fromJson(env.DETAILS_JSON).releaseNotes }}" | sed 's/^/- /')), '\n') }}
         draft: false
         prerelease: false
 
