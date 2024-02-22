@@ -18,7 +18,15 @@ jobs:
         echo "Details Version: ${{ fromJson(env.DETAILS_JSON).version }}"
     - run: |
         echo "Release Notes: ${{ fromJson(env.DETAILS_JSON).releaseNotes }}"
-
+    
+    - name: Extract Release Notes
+      run: |
+        NOTES=""
+        for note in ${{ fromJson(env.DETAILS_JSON).releaseNotes[@] }}; do
+          NOTES="$NOTES\n$note"
+        done
+        echo "RELEASE_NOTES=$NOTES" >> $GITHUB_ENV
+    
     - name: Create Package Directory
       run: |
         mkdir -p ${{ fromJson(env.DETAILS_JSON).name }}
@@ -96,7 +104,7 @@ jobs:
       with:
         tag_name: ${{ fromJson(env.DETAILS_JSON).version }}
         release_name: v${{ fromJson(env.DETAILS_JSON).version }}
-        body: ${{ join('<br>', fromJson(env.DETAILS_JSON).releaseNotes) }}
+        body: ${{ env.RELEASE_NOTES }}
         draft: false
         prerelease: false
 
