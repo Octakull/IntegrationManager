@@ -97,7 +97,7 @@ jobs:
         body: |
           # Release Notes
 
-          ${{ join(fromJson(env.DETAILS_JSON).releaseNotes, '\n\n') }}
+          ${{ join(map(fromJson(env.DETAILS_JSON).releaseNotes, v => `- ${v}`), '\n') }}
         draft: false
         prerelease: false
 
