@@ -96,8 +96,7 @@ jobs:
         release_name: v${{ fromJson(env.DETAILS_JSON).version }}
         body: |
           ## Release Notes
-          - ${{ fromJson(env.DETAILS_JSON).releaseNotes[0] }}
-          ${{ join(fromJson(env.DETAILS_JSON).releaseNotes[1:], '\n- ') }}
+          ${{ fromJson(env.DETAILS_JSON).releaseNotes | map('  - ' + .) | join('\n') }}
         draft: false
         prerelease: false
 
