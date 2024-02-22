@@ -96,12 +96,7 @@ jobs:
         release_name: v${{ fromJson(env.DETAILS_JSON).version }}
         body: |
           ## Release Notes
-          $(
-            IFS=$'\n' # Set Internal Field Separator to newline
-            for note in ${{ fromJson(env.DETAILS_JSON).releaseNotes }}; do
-              echo " - $note" # Prefix each element with a bullet point
-            done
-          )
+          - ${{ join(fromJson(env.DETAILS_JSON).releaseNotes, '\n- ') }}
         draft: false
         prerelease: false
 
