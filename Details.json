@@ -1,6 +1,6 @@
 {
     "name": "Core",
-    "version": "0.2.28",
+    "version": "0.2.29",
     "folderGuid": "6ebfba3f9e8e03649a01769bde06f906",
     "description": "Integrated with GitHub, this package simplifies the process of software maintenance, allowing for efficient updates and ensuring that the entire team is working with the latest versions. This tool contributes to a streamlined workflow, enhancing collaboration and keeping our development environment consistently up-to-date.",
     "releaseNotes": [
