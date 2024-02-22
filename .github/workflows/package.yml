@@ -17,7 +17,7 @@ jobs:
     - run: |
         echo "Details Version: ${{ fromJson(env.DETAILS_JSON).version }}"
     
-    - name: Create Package Directory
+    - name: Create ${{ fromJson(env.DETAILS_JSON).name }} Directory
       run: |
         mkdir -p ${{ fromJson(env.DETAILS_JSON).name }}
         
