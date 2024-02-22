@@ -21,11 +21,11 @@ jobs:
     
     - name: Extract Release Notes
       run: |
-        NOTES=""
-        for note in ${{ fromJson(env.DETAILS_JSON).releaseNotes[@] }}; do
-          NOTES="$NOTES\n$note"
+        RELEASE_NOTES=""
+        for note in $(echo "${{ fromJson(env.DETAILS_JSON).releaseNotes }}" | jq -r '.[]'); do
+          RELEASE_NOTES="$RELEASE_NOTES\n$note"
         done
-        echo "RELEASE_NOTES=$NOTES" >> $GITHUB_ENV
+        echo "RELEASE_NOTES=$RELEASE_NOTES" >> $GITHUB_ENV
     
     - name: Create Package Directory
       run: |
