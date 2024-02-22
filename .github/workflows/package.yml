@@ -17,24 +17,24 @@ jobs:
     - run: |
         echo "Details Version: ${{ fromJson(env.DETAILS_JSON).version }}"
 
-    - name: Create IntegrationManager Directory
+    - name: Create Package Directory
       run: |
-        mkdir -p IntegrationManager
+        mkdir -p ${{ fromJson(env.DETAILS_JSON).name }}
         
-        # Copy assets to IntegrationManager
-        find . -maxdepth 1 -mindepth 1 -not -name "IntegrationManager" -exec cp -R {} IntegrationManager/ \;
-        echo "Repository files copied to IntegrationManager."
+        # Copy assets to Package
+        find . -maxdepth 1 -mindepth 1 -not -name "${{ fromJson(env.DETAILS_JSON).name }}" -exec cp -R {} ${{ fromJson(env.DETAILS_JSON).name }}/ \;
+        echo "Repository files copied to ${{ fromJson(env.DETAILS_JSON).name }}."
 
-        # Create .meta files for IntegrationManager
-        touch IntegrationManager.meta
-        echo "fileFormatVersion: 2" > IntegrationManager.meta
-        echo "guid: e179bf41f223f1b478e0c00e9f819864" >> IntegrationManager.meta
-        echo "folderAsset: yes" >> IntegrationManager.meta
-        echo "DefaultImporter:" >> IntegrationManager.meta
-        echo "  externalObjects: {}" >> IntegrationManager.meta
-        echo "  userData:" >> IntegrationManager.meta
-        echo "  assetBundleName:" >> IntegrationManager.meta
-        echo "  assetBundleVariant:" >> IntegrationManager.meta
+        # Create .meta files for Package
+        touch ${{ fromJson(env.DETAILS_JSON).name }}.meta
+        echo "fileFormatVersion: 2" > ${{ fromJson(env.DETAILS_JSON).name }}.meta
+        echo "guid: e179bf41f223f1b478e0c00e9f819864" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
+        echo "folderAsset: yes" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
+        echo "DefaultImporter:" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
+        echo "  externalObjects: {}" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
+        echo "  userData:" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
+        echo "  assetBundleName:" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
+        echo "  assetBundleVariant:" >> ${{ fromJson(env.DETAILS_JSON).name }}.meta
         
     - name: Create GlitchSDK Directory
       run: |
@@ -94,7 +94,8 @@ jobs:
       with:
         tag_name: ${{ fromJson(env.DETAILS_JSON).version }}
         release_name: v${{ fromJson(env.DETAILS_JSON).version }}
-        body: ${{ join('\n', fromJson(env.DETAILS_JSON).releaseNotes) }}
+        body: >
+          ${{ join(' ', fromJson(env.DETAILS_JSON).releaseNotes) }}
         draft: false
         prerelease: false
 
